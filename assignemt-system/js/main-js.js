@@ -60,5 +60,5 @@ function loadAssignments(subjectId) {
 
 function submitAssignment() {
     alert('Aufgabe wurde erfolgreich eingereicht!');
-    window.location.reload();
+    showPage('subject-page');
 }
