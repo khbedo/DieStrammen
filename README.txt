@@ -1,3 +1,9 @@
+Willkommen zu unserem Assignmentsystem von Group 28: Die Strammen
+
+Für die Studentensicht muss index-html.html in assignment-system ausgeführt werden
+
+Für die Tutorensicht muss main.html in tutor-assignment-system ausgeführt werden
+
 Anmeldedaten
     Studentenseite(assignment-system)
     Email: student@uni.de / Passwort: test123
