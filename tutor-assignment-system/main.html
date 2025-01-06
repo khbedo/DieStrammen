@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Assignment System</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div id="loginPage" class="container">
+        <form class="login-form" onsubmit="handleLogin(event)">
+            <h2>Anmeldung</h2>
+            <input type="text" id="username" placeholder="Benutzername" required>
+            <input type="password" id="password" placeholder="Passwort" required>
+            <div id="loginError" class="error hidden">Ungültige Anmeldedaten</div>
+            <button type="submit">Anmelden</button>
+        </form>
+    </div>
+
+    <div id="coursePage" class="container hidden">
+        <div class="course-select">
+            <h2>Kurs auswählen</h2>
+            <select id="courseSelect">
+                <option value="1">Informatik 1</option>
+                <option value="2">Webentwicklung</option>
+                <option value="3">Datenbanken</option>
+            </select>
+            <button onclick="selectCourse()">Bestätigen</button>
+        </div>
+    </div>
+
+    <div id="managementPage" class="container hidden">
+        <div class="management-panel">
+            <div class="assignment-group-selector">
+                <select id="assignmentSelect" onchange="updateGroupList()">
+                    <option value="">Assignment auswählen...</option>
+                    <option value="1">Assignment 1: Grundlagen</option>
+                    <option value="2">Assignment 2: Fortgeschritten</option>
+                    <option value="3">Assignment 3: Projekt</option>
+                </select>
+                
+                <select id="groupSelect" class="hidden">
+                    <option value="">Gruppe auswählen...</option>
+                </select>
+            </div>
+
+            <div class="tab-buttons">
+                <button onclick="showTab('groups')">Gruppen</button>
+                <button onclick="showTab('points')">Punkteliste</button>
+                <button onclick="showTab('submissions')">Abgaben</button>
+            </div>
+
+            <div id="submissionsTab" class="submission-list hidden">
+                <h3>Abgaben</h3>
+                <div id="selectedAssignmentGroup" class="hidden">
+                    <h4>Korrektur hochladen für:</h4>
+                    <p id="currentSelection"></p>
+                    
+                    <div class="dropzone" id="dropZone">
+                        Dateien hier hineinziehen oder klicken zum Auswählen
+                        <input type="file" id="fileInput" style="display: none" multiple>
+                    </div>
+                    
+                    <div id="fileList" class="file-list"></div>
+                </div>
+            </div>
+
+            <div id="groupsTab" class="group-list">
+                <h3>Gruppen</h3>
+                <div id="groupsList"></div>
+            </div>
+
+            <div id="pointsTab" class="points-list hidden">
+                <h3>Punkteliste</h3>
+                <div id="pointsList"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/data.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
