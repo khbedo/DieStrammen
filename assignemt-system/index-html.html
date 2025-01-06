@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assignment System</title>
+    <link rel="stylesheet" href="css/styles-css.css">
+</head>
+<body>
+    <!-- Login Page -->
+    <div id="login-page" class="container">
+        <div class="card">
+            <h2>Anmelden</h2>
+            <form id="login-form">
+                <div class="form-group">
+                    <label>E-Mail</label>
+                    <input type="email" id="email" required>
+                </div>
+                <div class="form-group">
+                    <label>Passwort</label>
+                    <input type="password" id="password" required>
+                </div>
+                <div class="error" id="login-error"></div>
+                <button type="submit">Anmelden</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Subject Selection Page -->
+    <div id="subject-page" class="container hidden">
+        <div class="card">
+            <h2>Fach auswählen</h2>
+            <div class="button-grid" id="subject-buttons"></div>
+        </div>
+    </div>
+
+    <!-- Assignment Selection Page -->
+    <div id="assignment-page" class="container hidden">
+        <div class="card">
+            <h2>Aufgabe auswählen</h2>
+            <div class="button-grid" id="assignment-buttons"></div>
+        </div>
+    </div>
+
+    <!-- Main Submission Page -->
+    <div id="submission-page" class="container hidden">
+        <div class="header">
+            <h2 id="submission-title">Aufgabenabgabe</h2>
+        </div>
+        <div class="card">
+            <h3>Abgabefrist</h3>
+            <p class="deadline" id="deadline"></p>
+            
+            <h3>Dateien hochladen</h3>
+            <div class="dropzone" id="dropzone">
+                <p>Dateien hier hineinziehen oder klicken zum Auswählen</p>
+                <input type="file" id="file-input" multiple style="display: none">
+            </div>
+            <div id="file-list" class="file-list"></div>
+            
+            <div class="team-section" id="team-section">
+                <h3>Team erstellen</h3>
+                <div class="form-group">
+                    <input type="email" placeholder="Team-Mitglied E-Mail" id="team-email">
+                    <button onclick="addTeamMember()" style="margin-top: 10px">Mitglied hinzufügen</button>
+                </div>
+                <div id="team-members"></div>
+            </div>
+            
+            <button onclick="submitAssignment()" style="margin-top: 20px">Abgeben</button>
+        </div>
+    </div>
+
+    <script src="js/data-js.js"></script>
+    <script src="js/file-handling-js.js"></script>
+    <script src="js/team-management-js.js"></script>
+    <script src="js/main-js.js"></script>
+</body>
+</html>
