@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assignment Details - Assignment System</title>
+    <link rel="stylesheet" href="../assets/css/assignmentDetails.css">
+</head>
+<body>
+    <header class="header">
+        <h1>Assignment System</h1>
+        <div class="user-info">
+            <span id="username"></span>
+            <button class="logout-btn" onclick="logout()">Abmelden</button>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="details-header">
+            <h2 id="assignmentTitle">Assignment Details</h2>
+            <a href="assignment-list.html" class="back-button">← Zurück zur Übersicht</a>
+        </div>
+
+        <div class="details-box">
+            <div class="submission-info">
+                <h3>Abgabe-Informationen</h3>
+                <p>Abgegeben am: <span id="submissionDate">15.12.2024, 14:30 Uhr</span></p>
+                <p>Status: <span class="status-badge status-graded">Bewertet</span></p>
+            </div>
+
+            <section>
+                <h3 class="section-title">Eingereichte Dateien</h3>
+                <div class="file-list">
+                    <div class="file-item">
+                        <div class="file-info">
+                            <div class="file-icon">JAVA</div>
+                            <div>
+                                <div>Solution.java</div>
+                                <div style="font-size: 0.8em; color: #666;">245 KB</div>
+                            </div>
+                        </div>
+                        <button class="download-button" onclick="downloadFile('solution.java')">
+                            Herunterladen
+                        </button>
+                    </div>
+                    <div class="file-item">
+                        <div class="file-info">
+                            <div class="file-icon">PDF</div>
+                            <div>
+                                <div>Documentation.pdf</div>
+                                <div style="font-size: 0.8em; color: #666;">1.2 MB</div>
+                            </div>
+                        </div>
+                        <button class="download-button" onclick="downloadFile('documentation.pdf')">
+                            Herunterladen
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <section class="feedback-section">
+                <h3 class="section-title">Bewertung & Feedback</h3>
+
+                <div class="grade-box">
+                    <div>Gesamtbewertung</div>
+                    <div class="grade-value">92/100</div>
+                    <div>Sehr gut</div>
+                </div>
+
+                <div class="feedback-text">
+                    <h4>Feedback vom Tutor:</h4>
+                    <p>Sehr gute Implementierung der geforderten Funktionalitäten. Die Dokumentation ist ausführlich und gut strukturiert. Hier sind einige spezifische Anmerkungen:</p>
+                    <ul style="margin: 10px 0 10px 20px;">
+                        <li>Ausgezeichnete Fehlerbehandlung</li>
+                        <li>Gute Testabdeckung</li>
+                        <li>Code-Stil könnte an einigen Stellen verbessert werden</li>
+                    </ul>
+                </div>
+
+                <div class="correction-files">
+                    <h4 class="section-title">Korrektur-Dateien</h4>
+                    <div class="file-item">
+                        <div class="file-info">
+                            <div class="file-icon">PDF</div>
+                            <div>
+                                <div>Detailed_Feedback.pdf</div>
+                                <div style="font-size: 0.8em; color: #666;">384 KB</div>
+                            </div>
+                        </div>
+                        <button class="download-button" onclick="downloadFile('feedback.pdf')">
+                            Herunterladen
+                        </button>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+    <script src="../js/assignmentDetails.js"></script>
+</body>
+</html>

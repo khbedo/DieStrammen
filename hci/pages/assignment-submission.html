@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assignment Abgabe</title>
+    <link rel="stylesheet" href="../assets/css/assignmentSubmission.css">
+    <!-- Font Awesome für Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+<div class="header">
+    <h1>Assignment Abgabe</h1>
+    <a href="#" class="back-button">
+        <i class="fas fa-arrow-left"></i>
+        Zurück zur Übersicht
+    </a>
+</div>
+
+<div class="container">
+    <div class="assignment-section">
+        <h2 class="section-title">Projektarbeit Web-Entwicklung</h2>
+        <p>Abgabefrist: 15. Januar 2025, 23:59 Uhr</p>
+
+        <div id="dropzone" class="dropzone">
+            <i class="fas fa-cloud-upload-alt"></i>
+            <p>Dateien hier reinziehen oder klicken zum Auswählen</p>
+            <p style="font-size: 12px; color: #666; margin-top: 10px;">
+                Maximale Dateigröße: 10MB | Erlaubte Formate: PDF, ZIP, JPG, PNG
+            </p>
+            <input type="file" id="fileInput" multiple style="display: none">
+        </div>
+
+        <div id="previewContainer" class="preview-container">
+            <img id="previewImage" class="preview-image" alt="Vorschau">
+        </div>
+
+        <div id="fileList" class="file-list"></div>
+
+        <button id="submitBtn" class="submit-btn">
+            <i class="fas fa-paper-plane"></i>
+            Assignment abgeben
+        </button>
+
+        <div id="submissionStatus" class="submission-status"></div>
+    </div>
+</div>
+<script src="../js/assignmentSubmission.js"></script>
+</body>
+</html>

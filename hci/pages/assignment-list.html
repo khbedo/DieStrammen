@@ -1,0 +1,61 @@
+<!-- assignment-list.html -->
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assignments - Assignment System</title>
+    <link rel="stylesheet" href="../assets/css/assignmentList.css">
+</head>
+<body>
+    <header class="header">
+        <h1>Assignment System</h1>
+        <div class="user-info">
+            <span id="username"></span>
+            <button class="logout-btn" onclick="logout()">Abmelden</button>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="course-header">
+            <h2 id="courseName">Assignments</h2>
+            <a href="course-selection.html" class="back-button">← Zurück zur Kursauswahl</a>
+        </div>
+
+        <section class="assignment-section">
+            <h3 class="section-title">Aktuelle Assignments</h3>
+            <div id="activeAssignments">
+                <div class="assignment-card active" onclick="goToSubmission('A1')">
+                    <h3>Assignment 1: Grundlagen der Java-Programmierung</h3>
+                    <div class="assignment-meta">
+                        <span>Abgabefrist: 31.01.2025</span>
+                        <span class="status-badge status-active">Aktiv</span>
+                    </div>
+                </div>
+                <div class="assignment-card active" onclick="goToSubmission('A2')">
+                    <h3>Assignment 2: Objektorientierte Programmierung</h3>
+                    <div class="assignment-meta">
+                        <span>Abgabefrist: 15.02.2025</span>
+                        <span class="status-badge status-active">Aktiv</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="assignment-section">
+            <h3 class="section-title">Abgeschlossene Assignments</h3>
+            <div id="completedAssignments">
+                <div class="assignment-card completed" onclick="viewSubmission('A0')">
+                    <h3>Assignment 0: Entwicklungsumgebung einrichten</h3>
+                    <div class="assignment-meta">
+                        <span>Abgegeben am: 15.12.2024</span>
+                        <span class="status-badge status-completed">Bewertet</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="../js/assignmentList.js"></script>
+</body>
+</html>
