@@ -221,6 +221,8 @@ body {
 .available-count {
     font-size: 14px;
     color: #666;
+    margin-left: 10px; /* Bewegt es minimal nach rechts */
+    margin-top: -5px;  /* Bewegt es minimal nach oben */
 }
 
 .search-input {
