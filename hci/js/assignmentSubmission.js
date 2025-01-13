@@ -199,16 +199,31 @@ fileInput.addEventListener('change', (e) => {
     handleFiles(e.target.files);
 });
 
+const maxFiles = 2; // Maximum number of files allowed
+
 function handleFiles(fileList) {
+    // Check if adding these files would exceed the max limit
+    if (files.size + fileList.length > maxFiles) {
+        showSubmissionStatus(`Es sind maximal ${maxFiles} Dateien erlaubt.`, 'error');
+        return;
+    }
+
     for (const file of fileList) {
+        if (files.size >= maxFiles) {
+            showSubmissionStatus(`Sie können maximal ${maxFiles} Dateien hinzufügen.`, 'error');
+            break;
+        }
+
         if (file.size > maxFileSize) {
             showSubmissionStatus(`${file.name} ist zu groß (max. 10MB)`, 'error');
             continue;
         }
+
         if (!allowedTypes.includes(file.type)) {
             showSubmissionStatus(`${file.name} hat ein ungültiges Format`, 'error');
             continue;
         }
+
         if (!files.has(file.name)) {
             files.add(file.name);
             addFileToList(file);
@@ -259,6 +274,7 @@ function addFileToList(file) {
     // Simulate upload progress
     simulateUpload(fileItem.querySelector('.progress'));
 }
+
 
 function getFileIcon(type) {
     switch(type) {
