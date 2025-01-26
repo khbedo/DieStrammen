@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assignments - Tutor Dashboard</title>
+    <link rel="stylesheet" href="../assets/css/assignmentList.css">
+</head>
+<body>
+<header class="header">
+    <h1>Assignment System</h1>
+    <div class="user-info">
+        <span id="username"></span>
+        <button class="logout-btn" onclick="logout()">Abmelden</button>
+    </div>
+</header>
+
+<main class="container" >
+    <div class="course-header">
+        <h2 id="courseName">Assignments</h2>
+        <a href="tutor-course-selection.html" class="back-button">← Zurück zur Kursübersicht</a>
+    </div>
+
+    <section class="assignment-section">
+        <h3 class="section-title">Aktuelle Assignments</h3>
+        <div id="activeAssignments" >
+            <div class="assignment-card active" onclick="selectAssignment('A1')">
+                <h3>Assignment 1: Grundlagen der Java-Programmierung</h3>
+                <div class="assignment-meta">
+                    <span>6/10 korrigiert</span>
+                    <span class="status-badge status-active">Aktiv</span>
+                </div>
+            </div>
+            <div class="assignment-card active" onclick="selectAssignment('A2')">
+                <h3>Assignment 2: Objektorientierte Programmierung</h3>
+                <div class="assignment-meta">
+                    <span>3/8 korrigiert</span>
+                    <span class="status-badge status-active">Aktiv</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="assignment-section">
+        <h3 class="section-title">Abgeschlossene Assignments</h3>
+        <div id="completedAssignments">
+            <div class="assignment-card completed" onclick="selectAssignment('A0')">
+                <h3>Assignment 0: Entwicklungsumgebung einrichten</h3>
+                <div class="assignment-meta">
+                    <span>12/12 korrigiert</span>
+                    <span class="status-badge status-completed">Bewertet</span>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<script src="../js/tutor-assignmentList.js"></script>
+</body>
+</html>

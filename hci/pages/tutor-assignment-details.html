@@ -1,0 +1,68 @@
+<!DOCTYPE html><!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assignment Details</title>
+    <link rel="stylesheet" href="../assets/css/tutor-assignmentDetails.css">
+</head>
+<body>
+<header class="header">
+    <h1>Assignment System</h1>
+    <div class="user-info">
+        <span id="username">Tutor</span>
+        <button class="logout-btn" onclick="logout()">Abmelden</button>
+    </div>
+</header>
+
+<main class="container">
+    <div class="assignment-header">
+        <h2 id="assignmentTitle">Assignment 1: Grundlagen der Java-Programmierung</h2>
+        <a href="#" class="back-button" onclick="returnToAssignments()">← Zurück zu den Assignments</a>
+    </div>
+
+    <section class="submission-section">
+        <h3>Nicht korrigierte Abgaben</h3>
+        <div id="uncorrectedSubmissions">
+            <div class="submission-card uncorrected" onclick="reviewSubmission('student1')">
+                <h4>Student 1</h4>
+                <div class="submission-meta">
+                    <span>Abgabezeit: 25.01.2025 14:00</span>
+                    <span>Status: Nicht korrigiert</span>
+                </div>
+            </div>
+            <div class="submission-card uncorrected" onclick="reviewSubmission('student2')">
+                <h4>Student 2</h4>
+                <div class="submission-meta">
+                    <span>Abgabezeit: 25.01.2025 15:30</span>
+                    <span>Status: Nicht korrigiert</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="submission-section">
+        <h3>Korrigierte Abgaben</h3>
+        <div id="correctedSubmissions">
+            <div class="submission-card corrected">
+                <h4>Student 3</h4>
+                <div class="submission-meta">
+                    <span>Abgabezeit: 24.01.2025 12:00</span>
+                    <span>Status: Korrigiert</span>
+                </div>
+            </div>
+            <div class="submission-card corrected">
+                <h4>Student 4</h4>
+                <div class="submission-meta">
+                    <span>Abgabezeit: 24.01.2025 10:45</span>
+                    <span>Status: Korrigiert</span>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<script src="../js/tutor-assignmentDetails.js"></script>
+
+</body>
+</html>

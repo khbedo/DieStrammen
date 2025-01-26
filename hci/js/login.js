@@ -21,9 +21,13 @@
                     username: user.username,
                     role: user.role
                 }));
-                
-                // Weiterleitung zur Kursauswahl
-                window.location.href = 'course-selection.html';
+
+                // Weiterleitung basierend auf der Rolle
+                if (user.role === 'tutor') {
+                    window.location.href = 'tutor-course-selection.html'; // Seite für Tutoren
+                } else if (user.role === 'student') {
+                    window.location.href = 'course-selection.html'; // Seite für Studenten
+                }
             } else {
                 errorMessage.style.display = 'block';
             }
