@@ -1,8 +1,8 @@
 Willkommen zu unserem Assignmentsystem von Group 28: Die Strammen
 
 Anmeldedaten
-    Studentenseite
+    Studentensicht
     Username: student1,  Passwort: pass123
 
-    Tutorseite
+    Tutorsicht
     Username: tutor1, password: pass456
