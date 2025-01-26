@@ -7,5 +7,5 @@ function returnToAssignments() {
 }
 
 function reviewSubmission(student) {
-    alert(`Abgabe von ${student} wird überprüft.`);
+    window.location.href = 'assignment-correction-list.html';
 }
