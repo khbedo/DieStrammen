@@ -199,7 +199,7 @@ fileInput.addEventListener('change', (e) => {
     handleFiles(e.target.files);
 });
 
-const maxFiles = 2; // Maximum number of files allowed
+const maxFiles = 1; // Maximum number of files allowed
 
 function handleFiles(fileList) {
     // Check if adding these files would exceed the max limit
@@ -320,7 +320,16 @@ submitBtn.addEventListener('click', () => {
         showSubmissionStatus('Bitte wählen Sie mindestens eine Datei aus.', 'error');
         return;
     }
-
+	submissionStatus.style.display = 'block'; 
+	const submittedFilesList = document.getElementById('submittedFilesList');
+    submittedFilesList.innerHTML = ''; // Leere den Container
+    files.forEach(fileName => {
+        const fileItem = document.createElement('div');
+        fileItem.className = 'file-item';
+        fileItem.textContent = fileName; // Zeige den Dateinamen an
+        submittedFilesList.appendChild(fileItem);
+    });
+	
     showSubmissionStatus('Assignment wurde erfolgreich abgegeben!', 'success');
 
     setTimeout(() => {
