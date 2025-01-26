@@ -199,7 +199,7 @@ fileInput.addEventListener('change', (e) => {
     handleFiles(e.target.files);
 });
 
-const maxFiles = 2; // Maximum number of files allowed
+const maxFiles = 1; // Maximum number of files allowed
 
 function handleFiles(fileList) {
     // Check if adding these files would exceed the max limit
