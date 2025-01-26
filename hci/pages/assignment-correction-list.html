@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assignment Korrektur - Dozent</title>
+    <link rel="stylesheet" href="../assets/css/assignmentCorrection.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <div class="header">
+        <h1>Bewertung</h1>
+        <a href="assignment-list.html" class="back-button">← Zurück zur Übersicht</a>
+    </div>
+
+    <main class="container">
+
+        <section class="student-info">
+            <h3>Studenteninformationen</h3>
+            <div class="student-details">
+                <p><strong>Name:</strong> <span id="studentName">Max Mustermann</span></p>
+                <p><strong>Matrikelnummer:</strong> <span id="studentId">12345678</span></p>
+            </div>
+        </section>
+
+        <section class="submitted-files">
+            <h3>Eingereichte Dateien</h3>
+            <div id="fileList" class="file-grid">
+                <!-- Dynamisch generierte Dateiliste -->
+                <div class="datai-item">
+                    <p class="datainame">Hauptprogramm.java</p>
+                    <button onclick="downloadFile('Hauptprogramm.java')">Herunterladen</button>
+                </div>
+                <div class="datai-item">
+                    <p class="datainame">Hilfsfunktionen.java</p>
+                    <button onclick="downloadFile('Hilfsfunktionen.java')">Herunterladen</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="correction-form">
+            <h3>Bewertung</h3>
+            <form id="correctionForm">
+                <div class="points-section">
+                    <label for="points">Punkte (max. 100):</label>
+                    <input 
+                        type="number" 
+                        id="points" 
+                        name="points" 
+                        min="0" 
+                        max="100" 
+                        required
+                    >
+                </div>
+
+                <div class="notes-section">
+                    <label for="correctionNotes">Korrekturnotizen:</label>
+                    <textarea 
+                        id="correctionNotes" 
+                        name="correctionNotes" 
+                        rows="6"
+                        placeholder="Geben Sie hier Ihre detaillierten Anmerkungen ein..."
+                    ></textarea>
+                </div>
+
+                <div id="dropzone" class="dropzone">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <p>Dateien hier reinziehen oder klicken zum Auswählen</p>
+                    <p style="font-size: 12px; color: #666; margin-top: 10px;">
+                        Maximale Dateigröße: 10MB | Erlaubte Formate: PDF, ZIP, JPG, PNG
+                    </p>
+                    <input type="file" id="fileInput" multiple style="display: none">
+                </div>
+
+                <div id="previewContainer" class="preview-container">
+                    <img id="previewImage" class="preview-image" alt="Vorschau">
+                </div>
+
+                <div id="fileListPreview" class="file-list"></div>
+
+                <div class="actions">
+                    <button type="submit" class="submit-btn">Korrektur absenden</button>
+                </div>
+            </form>
+        </section>
+    </main>
+
+    <script src="../js/assignmentCorrectionList.js"></script>
+</body>
+</html>

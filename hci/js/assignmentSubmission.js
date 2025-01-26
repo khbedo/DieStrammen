@@ -199,7 +199,7 @@ fileInput.addEventListener('change', (e) => {
     handleFiles(e.target.files);
 });
 
-const maxFiles = 2; // Maximum number of files allowed
+const maxFiles = 1; // Maximum number of files allowed
 
 function handleFiles(fileList) {
     // Check if adding these files would exceed the max limit
@@ -320,7 +320,16 @@ submitBtn.addEventListener('click', () => {
         showSubmissionStatus('Bitte wählen Sie mindestens eine Datei aus.', 'error');
         return;
     }
-
+	submissionStatus.style.display = 'block'; 
+	const submittedFilesList = document.getElementById('submittedFilesList');
+    submittedFilesList.innerHTML = ''; // Leere den Container
+    files.forEach(fileName => {
+        const fileItem = document.createElement('div');
+        fileItem.className = 'file-item';
+        fileItem.textContent = fileName; // Zeige den Dateinamen an
+        submittedFilesList.appendChild(fileItem);
+    });
+	
     showSubmissionStatus('Assignment wurde erfolgreich abgegeben!', 'success');
 
     setTimeout(() => {
@@ -339,3 +348,304 @@ function showSubmissionStatus(message, type) {
             `;
     submissionStatus.className = 'submission-status ' + type;
 }
+
+const pointsConfig = {
+    pointsEarnedBeforeDeadline: 1, // Points earned for early submission
+    daysBeforeDeadline: 7, // How many days before deadline to earn points
+    pointCostForDeadlineExtension: 1 // Cost to extend deadline
+};
+
+// User points class to manage points for a specific course
+class CoursePoints {
+    constructor(courseId) {
+        this.courseId = courseId;
+        this.points = 0;
+        this.deadlineExtensionUsed = false;
+    }
+
+    // Add points for early submission
+    addPoints() {
+        this.points += pointsConfig.pointsEarnedBeforeDeadline;
+        this.saveToStorage();
+    }
+
+    // Spend points to extend deadline
+    spendPointsForDeadlineExtension() {
+        if (this.points >= pointsConfig.pointCostForDeadlineExtension && !this.deadlineExtensionUsed) {
+            this.points -= pointsConfig.pointCostForDeadlineExtension;
+            this.deadlineExtensionUsed = true;
+            this.saveToStorage();
+            return true;
+        }
+        return false;
+    }
+
+    // Save points to local storage
+    saveToStorage() {
+        localStorage.setItem(`coursePoints_${this.courseId}`, JSON.stringify({
+            points: this.points,
+            deadlineExtensionUsed: this.deadlineExtensionUsed
+        }));
+    }
+
+    // Load points from local storage
+    loadFromStorage() {
+        const savedPoints = localStorage.getItem(`coursePoints_${this.courseId}`);
+        if (savedPoints) {
+            const data = JSON.parse(savedPoints);
+            this.points = data.points;
+            this.deadlineExtensionUsed = data.deadlineExtensionUsed;
+        }
+    }
+}
+
+// Modify existing code to integrate points system
+function initializePointsSystem() {
+    // Assuming we have a way to identify the current course
+    const currentCourseId = 'informatik_web_development';
+
+    // Create or load course points
+    const coursePoints = new CoursePoints(currentCourseId);
+    coursePoints.loadFromStorage();
+
+    // Add points display to the assignment submission page
+    const pointsDisplay = document.createElement('div');
+    pointsDisplay.id = 'pointsDisplay';
+    pointsDisplay.className = 'points-display';
+    pointsDisplay.innerHTML = `
+        <h3>Punktekonto</h3>
+        <p>Aktuelle Punkte: <span id="currentPoints">${coursePoints.points}</span></p>
+    `;
+
+    // Add deadline extension button
+    const deadlineExtensionBtn = document.createElement('button');
+    deadlineExtensionBtn.id = 'deadlineExtensionBtn';
+    deadlineExtensionBtn.className = 'deadline-extension-btn';
+    deadlineExtensionBtn.textContent = 'Abgabefrist um 1 Tag verlängern';
+    deadlineExtensionBtn.addEventListener('click', () => {
+        if (coursePoints.spendPointsForDeadlineExtension()) {
+            // Update points display
+            document.getElementById('currentPoints').textContent = coursePoints.points;
+
+            // Logic to extend deadline (you'll need to implement this based on your specific deadline handling)
+            extendDeadline(1); // Extend by 1 day
+
+            // Disable button after use
+            deadlineExtensionBtn.disabled = true;
+            deadlineExtensionBtn.textContent = 'Verlängerung bereits genutzt';
+
+            showNotification('Abgabefrist um 1 Tag verlängert!', 'success');
+        } else {
+            showNotification('Nicht genügend Punkte oder Verlängerung bereits genutzt', 'error');
+        }
+    });
+
+    // Function to check and award points for early submission
+    function checkEarlySubmission() {
+        const deadline = new Date('2025-01-15T23:59:00'); // Hardcoded from HTML, replace with dynamic method
+        const earlySubmissionDate = new Date(deadline);
+        earlySubmissionDate.setDate(earlySubmissionDate.getDate() - pointsConfig.daysBeforeDeadline);
+
+        if (new Date() <= earlySubmissionDate) {
+            coursePoints.addPoints();
+            document.getElementById('currentPoints').textContent = coursePoints.points;
+            showNotification(`Punkt für frühe Abgabe erhalten! Aktuelle Punkte: ${coursePoints.points}`, 'success');
+        }
+    }
+
+    // Function to extend deadline (placeholder - implement according to your specific requirements)
+    function extendDeadline(days) {
+        // This is a placeholder. You'll need to implement actual deadline extension logic
+        console.log(`Deadline extended by ${days} day(s)`);
+    }
+
+    // Add points display and deadline extension button to the page
+    const assignmentSection = document.querySelector('.assignment-section');
+    assignmentSection.insertBefore(pointsDisplay, assignmentSection.firstChild);
+    assignmentSection.insertBefore(deadlineExtensionBtn, submitBtn);
+
+    // Check for early submission when script loads
+    checkEarlySubmission();
+
+    // Optional: Add points check to submission
+    submitBtn.addEventListener('click', checkEarlySubmission);
+}
+function extendDeadline(days) {
+    // Hole das Deadline-Textfeld
+    const deadlineTextElement = document.getElementById('deadlineText');
+
+    // Konvertiere den aktuellen Deadline-Text in ein Datum
+    const currentDeadline = parseDeadlineText(deadlineTextElement.textContent);
+
+    // Verlängere das Datum um die angegebene Anzahl von Tagen
+    currentDeadline.setDate(currentDeadline.getDate() + days);
+
+    // Formatiere das neue Datum zurück in den Anzeigetext
+    const newDeadlineText = formatDeadlineText(currentDeadline);
+
+    // Aktualisiere den Anzeigetext
+    deadlineTextElement.textContent = newDeadlineText;
+
+    // Optional: Speichere die neue Deadline (z.B. im LocalStorage)
+    localStorage.setItem('assignmentDeadline', currentDeadline.toISOString());
+
+    // Zeige Benachrichtigung
+    showNotification(`Abgabefrist um ${days} Tag(e) verlängert!`, 'success');
+}
+
+const assignmentConfig = {
+    courseId: 'informatik_web_development',
+    title: 'Projektarbeit Web-Entwicklung',
+    initialDeadline: new Date('2025-01-26T23:59:00'),
+    pointsForEarlySubmission: 1,
+    daysBeforeDeadlineToEarnPoints: 7
+};
+
+class AssignmentPointsManager {
+    constructor(courseId) {
+        this.courseId = courseId;
+        this.loadState();
+    }
+
+    loadState() {
+        const savedState = localStorage.getItem(`assignment_${this.courseId}_state`);
+        if (savedState) {
+            const state = JSON.parse(savedState);
+            this.points = state.points || 0;
+            this.deadline = new Date(state.deadline || assignmentConfig.initialDeadline);
+            this.deadlineExtensionUsed = state.deadlineExtensionUsed || false;
+        } else {
+            this.points = 0;
+            this.deadline = new Date(assignmentConfig.initialDeadline);
+            this.deadlineExtensionUsed = false;
+        }
+    }
+
+    saveState() {
+        localStorage.setItem(`assignment_${this.courseId}_state`, JSON.stringify({
+            points: this.points,
+            deadline: this.deadline,
+            deadlineExtensionUsed: this.deadlineExtensionUsed
+        }));
+    }
+
+    addPoints() {
+        this.points += assignmentConfig.pointsForEarlySubmission;
+        this.saveState();
+        return this.points;
+    }
+
+    spendPointsForDeadlineExtension() {
+        if (this.points > 0 && !this.deadlineExtensionUsed) {
+            this.points--;
+            this.deadline.setDate(this.deadline.getDate() + 1);
+            this.deadlineExtensionUsed = true;
+            this.saveState();
+            return true;
+        }
+        return false;
+    }
+}
+
+function updatePointsDisplay(points) {
+    const pointsElement = document.getElementById('currentPoints');
+    pointsElement.textContent = points;
+}
+
+function updateDeadlineDisplay(deadline) {
+    const deadlineTextElement = document.getElementById('deadlineText');
+    deadlineTextElement.textContent = deadline.toLocaleDateString('de-DE', {
+        day: '2-digit',
+        month: 'long',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+    }) + ' Uhr';
+}
+
+// Hilfsfunktion zum Parsen des Deadline-Textes
+function parseDeadlineText(deadlineText) {
+    // Erwarte Format: "TT. Monat JJJJ, HH:MM Uhr"
+    const parts = deadlineText.split(/[.,\s]/);
+    const day = parseInt(parts[0]);
+    const monthNames = [
+        'Januar', 'Februar', 'März', 'April', 'Mai', 'Juni',
+        'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'
+    ];
+    const month = monthNames.indexOf(parts[1]);
+    const year = parseInt(parts[2]);
+    const [hours, minutes] = parts[4].split(':').map(Number);
+
+    return new Date(year, month, day, hours, minutes);
+}
+
+// Hilfsfunktion zum Formatieren des Datums
+function formatDeadlineText(date) {
+    const monthNames = [
+        'Januar', 'Februar', 'März', 'April', 'Mai', 'Juni',
+        'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'
+    ];
+
+    return `${date.getDate()}. ${monthNames[date.getMonth()]} ${date.getFullYear()}, ${
+        String(date.getHours()).padStart(2, '0')
+    }:${
+        String(date.getMinutes()).padStart(2, '0')
+    } Uhr`;
+}
+
+// Beim Laden der Seite die gespeicherte Deadline laden (falls vorhanden)
+document.addEventListener('DOMContentLoaded', () => {
+    const savedDeadline = localStorage.getItem('assignmentDeadline');
+    if (savedDeadline) {
+        const deadlineDate = new Date(savedDeadline);
+        const deadlineTextElement = document.getElementById('deadlineText');
+        deadlineTextElement.textContent = formatDeadlineText(deadlineDate);
+    }
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    const pointsManager = new AssignmentPointsManager(assignmentConfig.courseId);
+
+    // Initial UI setzen
+    updateDeadlineDisplay(pointsManager.deadline);
+    updatePointsDisplay(pointsManager.points);
+
+    // Deadline verlängern
+    const extendDeadlineBtn = document.getElementById('extendDeadlineBtn');
+    extendDeadlineBtn.addEventListener('click', () => {
+        if (pointsManager.spendPointsForDeadlineExtension()) {
+            updateDeadlineDisplay(pointsManager.deadline);
+            updatePointsDisplay(pointsManager.points);
+            showNotification('Abgabefrist um 1 Tag verlängert!', 'success');
+        } else {
+            showNotification('Keine Punkte verfügbar oder Verlängerung bereits genutzt.', 'error');
+        }
+    });
+
+    // Assignment erfolgreich abgeben
+    const submitBtn = document.getElementById('submitBtn');
+    submitBtn.addEventListener('click', () => {
+        if (files.size === 0) {
+            showSubmissionStatus('Bitte wählen Sie mindestens eine Datei aus.', 'error');
+            return;
+        }
+
+        // Punkte erhöhen
+        const newPoints = pointsManager.addPoints();
+        updatePointsDisplay(newPoints);
+        showNotification(`Punkt für erfolgreiche Abgabe erhalten! Aktuelle Punkte: ${newPoints}`, 'success');
+
+        // Abgabe-Logik
+        showSubmissionStatus('Assignment wurde erfolgreich abgegeben!', 'success');
+        setTimeout(() => {
+            files.clear();
+            fileList.innerHTML = '';
+            submissionStatus.style.display = 'none';
+            previewContainer.style.display = 'none';
+        }, 3000);
+    });
+});
+
+// Initialize points system when DOM is loaded
+document.getElementById('assignmentTitle').textContent = assignmentConfig.title;
+document.getElementById('currentPoints').textContent = pointsManager.points;

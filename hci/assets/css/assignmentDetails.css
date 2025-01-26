@@ -120,6 +120,15 @@ body {
     text-align: center;
 }
 
+.logout-btn {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
 .grade-value {
     font-size: 32px;
     font-weight: bold;
@@ -199,15 +208,6 @@ body {
 
 .upload-button {
     background: #3498db;
-    color: white;
-    border: none;
-    padding: 8px 16px;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-.logout-btn {
-    background-color: #e74c3c;
     color: white;
     border: none;
     padding: 8px 16px;
